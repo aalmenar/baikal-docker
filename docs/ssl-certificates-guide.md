@@ -22,7 +22,7 @@ Alternatively, if you're using the `apache` image variant, you can also mount yo
 
 ```bash
 # The folder /etc/ssl/private/baikal contains the files baikal.public.pem and baikal.private.pem
-docker run --rm -it -p 80:80 -p 443:443 -v /etc/ssl/private/baikal:/etc/ssl/private/:ro ckulka/baikal:apache
+docker run --rm -it -p 80:80 -p 443:443 -v /etc/ssl/private/baikal:/etc/ssl/private/:ro ghcr.io/aalmenar/baikal:apache
 ```
 
 I also included the Docker Compose template [examples/docker-compose.apache.yaml](https://github.com/ckulka/baikal-docker/blob/master/examples/docker-compose.apache.yaml) for this scenario.

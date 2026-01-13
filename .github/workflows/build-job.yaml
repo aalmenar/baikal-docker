@@ -22,13 +22,6 @@ on:
         description: Git reference to build
         default: ${{ github.ref }}
         type: string
-    secrets:
-      DOCKERHUB_USERNAME:
-        description: DockerHub username
-        required: true
-      DOCKERHUB_PASSWORD:
-        description: DockerHub password
-        required: true
 
 jobs:
   build:
@@ -41,22 +34,23 @@ jobs:
 
       # See https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
 
       # See https://github.com/docker/setup-buildx-action
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
 
       # See https://github.com/docker/login-action
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # See https://github.com/docker/build-push-action
       - name: Build and push image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v6
         with:
           file: ${{ inputs.dockerfile }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/386
@@ -64,9 +58,9 @@ jobs:
           tags: ${{ inputs.tags }}
           labels: |
             org.opencontainers.image.created=${{ github.event.created_at }}
-            org.opencontainers.image.url=https://hub.docker.com/r/ckulka/baikal
-            org.opencontainers.image.documentation=https://github.com/ckulka/baikal-docker
-            org.opencontainers.image.source=https://github.com/ckulka/baikal-docker
+            org.opencontainers.image.url=https://ghcr.io/${{ github.repository_owner }}/baikal
+            org.opencontainers.image.documentation=https://github.com/${{ github.repository }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.version=${{ inputs.image-version }}
             org.opencontainers.image.revision=${{ inputs.image-revision }}
             org.opencontainers.image.licenses=MIT

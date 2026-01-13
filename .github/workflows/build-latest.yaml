@@ -70,8 +70,8 @@ jobs:
       dockerfile: apache.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       tags: |
-        ckulka/baikal:apache
-        ckulka/baikal:latest
+        ghcr.io/${{ github.repository_owner }}/baikal:apache
+        ghcr.io/${{ github.repository_owner }}/baikal:latest
     secrets: inherit
 
   apache_php82:
@@ -85,7 +85,7 @@ jobs:
       dockerfile: apache-php8.2.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       image-revision: ${{ needs.parse_release_tag.outputs.ref }}
-      tags: ckulka/baikal:apache-php8.2
+      tags: ghcr.io/${{ github.repository_owner }}/baikal:apache-php8.2
     secrets: inherit
 
   nginx:
@@ -99,7 +99,7 @@ jobs:
       dockerfile: nginx.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       image-revision: ${{ needs.parse_release_tag.outputs.ref }}
-      tags: ckulka/baikal:nginx
+      tags: ghcr.io/${{ github.repository_owner }}/baikal:nginx
     secrets: inherit
 
   nginx_php82:
@@ -113,5 +113,5 @@ jobs:
       dockerfile: nginx-php8.2.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       image-revision: ${{ needs.parse_release_tag.outputs.ref }}
-      tags: ckulka/baikal:nginx-php8.2
+      tags: ghcr.io/${{ github.repository_owner }}/baikal:nginx-php8.2
     secrets: inherit

@@ -19,6 +19,10 @@ I follow the same version naming scheme as [Baikal](http://sabre.io/baikal/) the
 
 The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm64v8` and `i386`.
 
+- [`0.11.1`, `0.11.1-apache`](apache.dockerfile)
+- [`0.11.1-apache-php8.2`, `0.11.1-php8.2`](apache-php8.2.dockerfile)
+- [`0.11.1-nginx`](nginx.dockerfile)
+- [`0.11.1-nginx-php8.2`](nginx-php8.2.dockerfile)
 - [`0.10.1`, `0.10.1-apache`](https://github.com/ckulka/baikal-docker/blob/0.10.1+hafix/apache.dockerfile)
 - [`0.10.1-apache-php8.2`, `0.10.1-php8.2`](https://github.com/ckulka/baikal-docker/blob/0.10.1+hafix/apache-php8.2.dockerfile)
 - [`0.10.1-nginx`](https://github.com/ckulka/baikal-docker/blob/0.10.1+hafix/nginx.dockerfile)
@@ -60,7 +64,7 @@ From [sabre.io/baikal](http://sabre.io/baikal/):
 The following command will start Baikal:
 
 ```bash
-docker run --rm -it -p 80:80 ckulka/baikal:nginx
+docker run --rm -it -p 80:80 ghcr.io/aalmenar/baikal:nginx
 ```
 
 Alternatively, use the provided [examples/docker-compose.yaml](https://github.com/ckulka/baikal-docker/blob/master/examples/docker-compose.yaml) from the Git repository:
@@ -91,9 +95,9 @@ You can find more installation and configuration guides here:
 
 ## Image Variants
 
-The `ckulka/baikal` images come in several flavors, each designed for a specific use case.
+The `ghcr.io/aalmenar/baikal` images come in several flavors, each designed for a specific use case.
 
-### `ckulka/baikal:<version>`
+### `ghcr.io/aalmenar/baikal:<version>`
 
 This is the defacto image and follows the official guidelines the closest using Apache httpd.
 
@@ -101,7 +105,7 @@ With that being said, it's worth checking out the `nginx` variant as it requires
 
 If you are unsure about what your needs are, you probably want to use this one though.
 
-### `ckulka/baikal:apache`
+### `ghcr.io/aalmenar/baikal:apache`
 
 This image relies on Apache httpd and uses the [official PHP image](https://hub.docker.com/_/php/) that's packaged with the Apache web server.
 
@@ -113,11 +117,11 @@ The `BAIKAL_SERVERNAME` environment variable is used to set the global `ServerNa
 
 The `BAIKAL_SERVERALIAS` environment variable is used to set the `ServerAlias` directive of the `VirtualHost`s, e.g. `dav.example.org dav.example.com`. For more details, see [Apache Core Features: ServerAlias Directive](https://httpd.apache.org/docs/2.4/mod/core.html#serveralias).
 
-### `ckulka/baikal:experimental`
+### `ghcr.io/aalmenar/baikal:experimental`
 
-This image has the latest code from the source repository [ckulka/baikal-docker](https://github.com/ckulka/baikal-docker), mainly used for testing before a version is released. Use this at your own risk.
+This image has the latest code from the source repository, mainly used for testing before a version is released. Use this at your own risk.
 
-### `ckulka/baikal:nginx`
+### `ghcr.io/aalmenar/baikal:nginx`
 
 This image relies on [nginx](https://www.nginx.com/) and uses the [official nginx image](https://hub.docker.com/_/nginx/).
 

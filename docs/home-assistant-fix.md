@@ -25,7 +25,7 @@ If you use a `docker-compose.yml` file, then it would look similar to this:
 ```yaml
 services:
   baikal:
-    image: ckulka/baikal:nginx
+    image: ghcr.io/aalmenar/baikal:nginx
     environment:
       APPLY_HOME_ASSISTANT_FIX: "true"
     # (...)

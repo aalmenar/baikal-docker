@@ -3,7 +3,7 @@
 version: "2"
 services:
   baikal:
-    image: ckulka/baikal:nginx
+    image: ghcr.io/aalmenar/baikal:nginx
     restart: always
     ports:
       - "80:80"
