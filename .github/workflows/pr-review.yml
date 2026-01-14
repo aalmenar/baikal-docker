@@ -34,6 +34,4 @@ jobs:
       matrix:
         dockerfile:
           - apache
-          - apache-php8.2
           - nginx
-          - nginx-php8.2
