@@ -51,7 +51,6 @@ With that in mind, the installation of Baikal is rather simple once you have the
    This will make it easier to get to your hosted instance.
 
 1. Add a new _path_ with
-
    - _Name_ is `Config`
    - _Container Path_ is `/var/www/baikal/config`
    - _Host Path_ is `/mnt/user/appdata/baikal/config` (change to where you store it on local server)
@@ -60,7 +59,6 @@ With that in mind, the installation of Baikal is rather simple once you have the
    - _Description_ is `Container Path: /var/www/baikal/config`
 
 1. Add a new _path_ with
-
    - _Name_ is `Specific`
    - _Container Path_ is `/var/www/baikal/Specific`
    - _Host Path_ is `/mnt/user/appdata/baikal/specific` (change to where you store it on local server)
@@ -69,7 +67,6 @@ With that in mind, the installation of Baikal is rather simple once you have the
    - _Description_ is `Container Path: /var/www/baikal/Specific`
 
 1. Now add in a _port_ with
-
    - _Name_ is `Port`
    - _Container Port_ is `80`
    - _Host Port_ is `80` (change to the port where you want to expose Baikal over HTTP on your local server)
