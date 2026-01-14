@@ -36,18 +36,6 @@ jobs:
         ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}
     secrets: inherit
 
-  apache_php82:
-    name: Apache (PHP 8.2)
-    needs: parse_release_tag
-    uses: ./.github/workflows/build-job.yaml
-    with:
-      dockerfile: apache-php8.2.dockerfile
-      image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
-      tags: |
-        ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-apache-php8.2
-        ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-php8.2
-    secrets: inherit
-
   nginx:
     name: Nginx
     needs: parse_release_tag
@@ -56,14 +44,4 @@ jobs:
       dockerfile: nginx.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       tags: ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx
-    secrets: inherit
-
-  nginx_php82:
-    name: Nginx (PHP 8.2)
-    needs: parse_release_tag
-    uses: ./.github/workflows/build-job.yaml
-    with:
-      dockerfile: nginx-php8.2.dockerfile
-      image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
-      tags: ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx-php8.2
     secrets: inherit

@@ -34,9 +34,7 @@ jobs:
       matrix:
         dockerfile:
           - apache
-          - apache-php8.2
           - nginx
-          - nginx-php8.2
 
   apache:
     name: Apache
@@ -50,18 +48,6 @@ jobs:
         ghcr.io/${{ github.repository_owner }}/baikal:experimental
     secrets: inherit
 
-  apache_php82:
-    name: Apache (PHP 8.2)
-    needs: test
-    uses: ./.github/workflows/build-job.yaml
-    with:
-      dockerfile: apache-php8.2.dockerfile
-      image-version: experimental
-      tags: |
-        ghcr.io/${{ github.repository_owner }}/baikal:experimental-apache-php8.2
-        ghcr.io/${{ github.repository_owner }}/baikal:experimental-php8.2
-    secrets: inherit
-
   nginx:
     name: Nginx
     needs: test
@@ -70,14 +56,4 @@ jobs:
       dockerfile: nginx.dockerfile
       image-version: experimental
       tags: ghcr.io/${{ github.repository_owner }}/baikal:experimental-nginx
-    secrets: inherit
-
-  nginx_php82:
-    name: Nginx (PHP 8.2)
-    needs: test
-    uses: ./.github/workflows/build-job.yaml
-    with:
-      dockerfile: nginx-php8.2.dockerfile
-      image-version: experimental
-      tags: ghcr.io/${{ github.repository_owner }}/baikal:experimental-nginx-php8.2
     secrets: inherit
