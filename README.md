@@ -2,7 +2,7 @@
 
 This repository is a fork of [ckulka/baikal-docker](https://github.com/ckulka/baikal-docker/) who has made an amazing job providing this image and work to build it.
 
-There are some variants from the original repository. Default images are the `*-nginx` and not `*-apache`.
+There are some variants from the original repository. Default images are the `*-nginx`.
 
 [![Latest images](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml/badge.svg)](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) [![Experimental images](https://github.com/aalmenar/baikal-docker/actions/workflows/build-experimental.yaml/badge.svg)](https://github.com/aalmenar/baikal-docker/actions/workflows/build-experimental.yaml) ![Docker Architectures](https://img.shields.io/badge/arch-amd64%20%7C%20arm32v7%20%7C%20arm64v8-informational)
 
@@ -13,20 +13,16 @@ These dockerfiles provide a ready-to-go [Baikal server](http://sabre.io/baikal/)
 Tags without a version are [weekly re-builds](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) to include the latest base image with the most recent updates:
 
 From now on latest images will be the nginx version.
-
 - `latest` and `nginx` are re-builds of the latest `*-nginx` version
-- `apache` are re-builds of the latest `*-apache` version
 
 Experimental images now default to using the nginx images
 
 - `experimental-nginx` and `experimental` are re-builds of the latest `*-nginx` version
-- `experimental-apache` are re-builds of the latest `*-apache` version
 
 I follow the same version naming scheme as [Baikal](http://sabre.io/baikal/) themselves.
 
 The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm64v8` and `i386`.
 
-- [`0.11.1-apache`](apache.dockerfile)
 - [`0.11.1`, `0.11.1-nginx`](nginx.dockerfile)
 
 ## Quick reference
@@ -88,36 +84,12 @@ You can find more installation and configuration guides here:
 
 The `ghcr.io/aalmenar/baikal` images come in several flavors, each designed for a specific use case.
 
-### `ghcr.io/aalmenar/baikal:<version>`
-
-This is the defacto image and follows the official guidelines the closest using Apache httpd.
-
-With that being said, it's worth checking out the `nginx` variant as it requires fewer resources and produces no warning messages out-of-the-box.
-
-If you are unsure about what your needs are, you probably want to use this one though.
-
-### `ghcr.io/aalmenar/baikal:apache`
-
-This image relies on Apache httpd and uses the [official PHP image](https://hub.docker.com/_/php/) that's packaged with the Apache web server.
-
-It also ships with HTTPS support and self-signed certificates, which can be replaced by user-provided certificates - for more details, see the [SSL Certificate Guide](https://github.com/aalmenar/baikal-docker/blob/master/docs/ssl-certificates-guide.md).
-
-This image uses environment variables to set Apache's `ServerName` and `ServerAlias` directives to avoid Apache httpd's warnings in the logs.
-
-The `BAIKAL_SERVERNAME` environment variable is used to set the global `ServerName` directive, e.g. `dav.example.io`. For more details, see [Apache Core Features: ServerName Directive](https://httpd.apache.org/docs/2.4/mod/core.html#servername).
-
-The `BAIKAL_SERVERALIAS` environment variable is used to set the `ServerAlias` directive of the `VirtualHost`s, e.g. `dav.example.org dav.example.com`. For more details, see [Apache Core Features: ServerAlias Directive](https://httpd.apache.org/docs/2.4/mod/core.html#serveralias).
-
 ### `ghcr.io/aalmenar/baikal:experimental`
 
 This image has the latest code from the source repository, mainly used for testing before a version is released. Use this at your own risk.
 
-### `ghcr.io/aalmenar/baikal:nginx`
+### `ghcr.io/aalmenar/baikal:latest`
 
 This image relies on [nginx](https://www.nginx.com/) and uses the [official nginx image](https://hub.docker.com/_/nginx/).
 
 Compared to the Apache variant, it is significantly smaller (less than half the size) and produces no warning messages out-of-the-box.
-
-## Future breaking changes
-
-- `*-apache`images are presummably going away since they do not offer anything over the nginx images and need more resources to be executed.
