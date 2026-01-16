@@ -13,10 +13,12 @@ These dockerfiles provide a ready-to-go [Baikal server](http://sabre.io/baikal/)
 Tags without a version are [weekly re-builds](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) to include the latest base image with the most recent updates:
 
 From now on latest images will be the nginx version.
+
 - `latest` and `nginx` are re-builds of the latest `*-nginx` version
 - `apache` are re-builds of the latest `*-apache` version
 
 Experimental images now default to using the nginx images
+
 - `experimental-nginx` and `experimental` are re-builds of the latest `*-nginx` version
 - `experimental-apache` are re-builds of the latest `*-apache` version
 
@@ -118,4 +120,4 @@ Compared to the Apache variant, it is significantly smaller (less than half the 
 
 ## Future breaking changes
 
-  - `*-apache`images are presummably going away since they do not offer anything over the nginx images and need more resources to be executed.
+- `*-apache`images are presummably going away since they do not offer anything over the nginx images and need more resources to be executed.
