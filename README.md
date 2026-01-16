@@ -25,8 +25,6 @@ The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm
 - [`0.11.1`, `0.11.1-apache`](apache.dockerfile)
 - [`0.11.1-nginx`](nginx.dockerfile)
 
-For earlier versions all the way back to version 0.2.7, please search in the [tags](https://hub.docker.com/r/aalmenar/baikal/tags) tab. Version 0.4.5 and older are only available for `amd64`.
-
 ## Quick reference
 
 - **Where to file issues**:
