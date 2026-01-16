@@ -18,6 +18,9 @@ on:
       - "*.dockerfile"
       - files/**
 
+  # Allow manually triggered rebuilds
+  workflow_dispatch:
+
 concurrency:
   group: build-experimental-images
   cancel-in-progress: true
