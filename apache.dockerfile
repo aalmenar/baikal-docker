@@ -17,7 +17,7 @@ RUN apt-get update            &&\
     msmtp msmtp-mta           \
     libpq-dev                 &&\
   rm -rf /var/lib/apt/lists/* &&\
-  docker-php-ext-install curl pdo pdo_mysql pdo_pgsql pgsql
+  docker-php-ext-install curl pdo pdo_mysql pdo_pgsql pgsql imap
 
 # Configure Apache + HTTPS
 COPY files/apache.conf /etc/apache2/sites-enabled/000-default.conf
