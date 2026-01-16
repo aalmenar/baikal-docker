@@ -113,3 +113,7 @@ This image has the latest code from the source repository, mainly used for testi
 This image relies on [nginx](https://www.nginx.com/) and uses the [official nginx image](https://hub.docker.com/_/nginx/).
 
 Compared to the Apache variant, it is significantly smaller (less than half the size) and produces no warning messages out-of-the-box.
+
+## Future breaking changes
+
+  - `*-apache`images are presummably going away since they do not offer anything over the nginx images and need more resources to be executed.
