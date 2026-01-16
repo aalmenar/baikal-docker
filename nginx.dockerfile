@@ -17,18 +17,18 @@ RUN curl -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
   apt remove -y lsb-release   &&\
   apt update                  &&\
   apt install -y            \
-  php8.4-curl               \
-  php8.4-fpm                \
-  php8.4-mbstring           \
-  php8.4-mysql              \
-  php8.4-pgsql              \
-  php8.4-sqlite3            \
-  php8.4-xml                \
+  php8.5-curl               \
+  php8.5-fpm                \
+  php8.5-mbstring           \
+  php8.5-mysql              \
+  php8.5-pgsql              \
+  php8.5-sqlite3            \
+  php8.5-xml                \
   sqlite3                   \
   msmtp msmtp-mta           &&\
   rm -rf /var/lib/apt/lists/* &&\
-  sed -i 's/www-data/nginx/' /etc/php/8.4/fpm/pool.d/www.conf &&\
-  sed -i 's/^listen = .*/listen = \/var\/run\/php-fpm.sock/' /etc/php/8.4/fpm/pool.d/www.conf
+  sed -i 's/www-data/nginx/' /etc/php/8.5/fpm/pool.d/www.conf &&\
+  sed -i 's/^listen = .*/listen = \/var\/run\/php-fpm.sock/' /etc/php/8.5/fpm/pool.d/www.conf
 
 # Add Baikal & nginx configuration
 COPY files/docker-entrypoint.d/*.sh files/docker-entrypoint.d/*.php files/docker-entrypoint.d/nginx/ /docker-entrypoint.d/
