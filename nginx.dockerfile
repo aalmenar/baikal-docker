@@ -24,6 +24,7 @@ RUN curl -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
   php8.5-pgsql              \
   php8.5-sqlite3            \
   php8.5-xml                \
+  php8.5-imap               \
   sqlite3                   \
   msmtp msmtp-mta           &&\
   rm -rf /var/lib/apt/lists/* &&\
