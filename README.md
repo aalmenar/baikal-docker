@@ -4,9 +4,7 @@ This repository is a fork of [ckulka/baikal-docker](https://github.com/ckulka/ba
 
 [![Latest images](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml/badge.svg)](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) [![Experimental images](https://github.com/aalmenar/baikal-docker/actions/workflows/build-experimental.yaml/badge.svg)](https://github.com/aalmenar/baikal-docker/actions/workflows/build-experimental.yaml) ![Docker Architectures](https://img.shields.io/badge/arch-amd64%20%7C%20arm32v7%20%7C%20arm64v8-informational)
 
-This dockerfile provides a ready-to-go [Baikal server](http://sabre.io/baikal/).
-
-For more details, see [aalmenar/baikal-docker (GitHub)](https://github.com/aalmenar/baikal-docker).
+These dockerfiles provide a ready-to-go [Baikal server](http://sabre.io/baikal/).
 
 ## Supported tags and respective Dockerfile links
 
@@ -22,14 +20,14 @@ The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm
 - [`0.11.1`, `0.11.1-apache`](apache.dockerfile)
 - [`0.11.1-nginx`](nginx.dockerfile)
 
-For earlier versions all the way back to version 0.2.7, please search in the [tags](https://hub.docker.com/r/aalmenar/baikal/tags) tab. Version 0.4.5 and older are only available for `amd64`. Version 0.9.0 and older do not support `i386`.
+For earlier versions all the way back to version 0.2.7, please search in the [tags](https://hub.docker.com/r/aalmenar/baikal/tags) tab. Version 0.4.5 and older are only available for `amd64`.
 
 ## Quick reference
 
 - **Where to file issues**:
   [https://github.com/aalmenar/baikal-docker/issues](https://github.com/aalmenar/baikal-docker/issues)
 - **Supported architectures** ([more info](https://github.com/docker-library/official-images#architectures-other-than-amd64)):
-  `amd64`, `arm32v7`, `arm64v8`, `i386`
+  `amd64`, `arm32v7`, `arm64v8`
 - **Image updates**:
   [PRs for aalmenar/baikal-docker](https://github.com/aalmenar/baikal-docker/pulls)
 - **Source of this description**:
