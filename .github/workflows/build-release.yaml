@@ -31,9 +31,7 @@ jobs:
     with:
       dockerfile: apache.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
-      tags: |
-        ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-apache
-        ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}
+      tags: ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-apache
     secrets: inherit
 
   nginx:
@@ -43,5 +41,7 @@ jobs:
     with:
       dockerfile: nginx.dockerfile
       image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
-      tags: ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx
+      tags: |
+        ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx
+        ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}
     secrets: inherit

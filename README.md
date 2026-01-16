@@ -2,6 +2,8 @@
 
 This repository is a fork of [ckulka/baikal-docker](https://github.com/ckulka/baikal-docker/) who has made an amazing job providing this image and work to build it.
 
+There are some variants from the original repository. Default images are the `*-nginx` and not `*-apache`.
+
 [![Latest images](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml/badge.svg)](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) [![Experimental images](https://github.com/aalmenar/baikal-docker/actions/workflows/build-experimental.yaml/badge.svg)](https://github.com/aalmenar/baikal-docker/actions/workflows/build-experimental.yaml) ![Docker Architectures](https://img.shields.io/badge/arch-amd64%20%7C%20arm32v7%20%7C%20arm64v8-informational)
 
 These dockerfiles provide a ready-to-go [Baikal server](http://sabre.io/baikal/).
@@ -22,8 +24,8 @@ I follow the same version naming scheme as [Baikal](http://sabre.io/baikal/) the
 
 The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm64v8` and `i386`.
 
-- [`0.11.1`, `0.11.1-apache`](apache.dockerfile)
-- [`0.11.1-nginx`](nginx.dockerfile)
+- [`0.11.1-apache`](apache.dockerfile)
+- [`0.11.1`, `0.11.1-nginx`](nginx.dockerfile)
 
 ## Quick reference
 
