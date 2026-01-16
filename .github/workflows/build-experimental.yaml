@@ -12,7 +12,7 @@ on:
   # Build on push to master
   push:
     branches:
-      - master
+      - main
     paths:
       - .github/workflows/build-experimental.yaml
       - "*.dockerfile"
