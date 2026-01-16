@@ -10,8 +10,13 @@ These dockerfiles provide a ready-to-go [Baikal server](http://sabre.io/baikal/)
 
 Tags without a version are [weekly re-builds](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) to include the latest base image with the most recent updates:
 
+
 - `latest` and `apache` are re-builds of the latest `*-apache` version
 - `nginx` are re-builds of the latest `*-nginx` version
+
+Experimental images now default to using the nginx images
+- `experimental-nginx` and `experimental` are re-builds of the latest `*-nginx` version
+- `experimental-apache` are re-builds of the latest `*-apache` version
 
 I follow the same version naming scheme as [Baikal](http://sabre.io/baikal/) themselves.
 

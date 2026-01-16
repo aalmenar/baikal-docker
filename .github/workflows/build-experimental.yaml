@@ -43,9 +43,7 @@ jobs:
     with:
       dockerfile: apache.dockerfile
       image-version: experimental
-      tags: |
-        ghcr.io/${{ github.repository_owner }}/baikal:experimental-apache
-        ghcr.io/${{ github.repository_owner }}/baikal:experimental
+      tags: ghcr.io/${{ github.repository_owner }}/baikal:experimental-apache
     secrets: inherit
 
   nginx:
@@ -55,5 +53,7 @@ jobs:
     with:
       dockerfile: nginx.dockerfile
       image-version: experimental
-      tags: ghcr.io/${{ github.repository_owner }}/baikal:experimental-nginx
+      tags: |
+        ghcr.io/${{ github.repository_owner }}/baikal:experimental-nginx
+        ghcr.io/${{ github.repository_owner }}/baikal:experimental
     secrets: inherit
