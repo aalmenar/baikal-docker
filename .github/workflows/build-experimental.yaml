@@ -33,18 +33,7 @@ jobs:
       fail-fast: true
       matrix:
         dockerfile:
-          - apache
           - nginx
-
-  apache:
-    name: Apache
-    needs: test
-    uses: ./.github/workflows/build-job.yaml
-    with:
-      dockerfile: apache.dockerfile
-      image-version: experimental
-      tags: ghcr.io/${{ github.repository_owner }}/baikal:experimental-apache
-    secrets: inherit
 
   nginx:
     name: Nginx

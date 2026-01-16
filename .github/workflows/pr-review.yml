@@ -33,5 +33,4 @@ jobs:
       fail-fast: true
       matrix:
         dockerfile:
-          - apache
           - nginx
