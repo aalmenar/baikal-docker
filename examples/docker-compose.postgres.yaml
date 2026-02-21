@@ -19,7 +19,7 @@ services:
       POSTGRES_USER: baikal
       POSTGRES_PASSWORD: ilovecookies
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
+      test: ["CMD", "pg_isready", "-U", "baikal"]
     volumes:
       - db:/var/lib/postgresql
 
