@@ -44,7 +44,7 @@ services:
       # See https://doc.traefik.io/traefik/v2.10/observability/access-logs/
       - --accesslog
       # See https://doc.traefik.io/traefik/v2.10/routing/entrypoints/#redirection
-      - --entrypoints.web.address=:8080
+      - --entrypoints.web.address=:80
       - --entrypoints.websecure.address=:443
       - --entrypoints.web.http.redirections.entryPoint.to=websecure
       - --entrypoints.web.http.redirections.entryPoint.scheme=https
