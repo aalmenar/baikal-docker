@@ -31,19 +31,17 @@ RUN curl -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
   sed -i 's/www-data/nginx/' /etc/php/8.5/fpm/pool.d/www.conf &&\
   sed -i 's/^listen = .*/listen = \/tmp\/php-fpm.sock/' /etc/php/8.5/fpm/pool.d/www.conf &&\
   sed -i 's/^error_log = .*/error_log = \/proc\/self\/fd\/2/' /etc/php/8.5/fpm/php-fpm.conf &&\
-  sed -i 's/^pid = .*/pid = \/tmp\/php-fpm.pid/' /etc/php/8.5/fpm/php-fpm.conf
+  sed -i 's/^pid = .*/pid = \/tmp\/php-fpm.pid/' /etc/php/8.5/fpm/php-fpm.conf &&\
+  sed -i 's,PIDFILE=${PIDFILE:-/run/nginx.pid},PIDFILE=${PIDFILE:-/tmp/nginx.pid},' /etc/init.d/nginx &&\
+  sed -i 's,\(/var\)\{0\,1\}/run/nginx.pid,/tmp/nginx.pid,' /etc/nginx/nginx.conf &&\
+  chown -R nginx:nginx /var/cache/nginx &&\
+  chmod -R g+w /var/cache/nginx
 
 # Add Baikal & nginx configuration
 COPY files/docker-entrypoint.d/*.sh files/docker-entrypoint.d/*.php files/docker-entrypoint.d/nginx/ /docker-entrypoint.d/
 COPY --from=builder --chown=nginx:nginx baikal /var/www/baikal
 COPY files/favicon.ico /var/www/baikal/html
 COPY files/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Rootless compatibility
-RUN sed -i 's,PIDFILE=${PIDFILE:-/run/nginx.pid},PIDFILE=${PIDFILE:-/tmp/nginx.pid},' /etc/init.d/nginx \
- && sed -i 's,\(/var\)\{0\,1\}/run/nginx.pid,/tmp/nginx.pid,' /etc/nginx/nginx.conf \
- && chown -R nginx:nginx /var/cache/nginx \
- && chmod -R g+w /var/cache/nginx
 
 VOLUME /var/www/baikal/config
 VOLUME /var/www/baikal/Specific
