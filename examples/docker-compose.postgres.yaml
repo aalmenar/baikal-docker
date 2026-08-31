@@ -1,0 +1,29 @@
+# Docker Compose file for a Baikal server with PostgreSQL 18
+
+version: "2"
+services:
+  baikal:
+    image: ghcr.io/aalmenar/baikal:nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - config:/var/www/baikal/config
+      - data:/var/www/baikal/Specific
+
+  db:
+    image: postgres:18
+    restart: always
+    environment:
+      POSTGRES_DB: baikal
+      POSTGRES_USER: baikal
+      POSTGRES_PASSWORD: ilovecookies
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "baikal"]
+    volumes:
+      - db:/var/lib/postgresql
+
+volumes:
+  config:
+  data:
+  db:
