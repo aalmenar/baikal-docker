@@ -1,10 +1,10 @@
 describe("Send mail with PHP", () => {
   it("Should send an email with PHP", () => {
     // Send email through PHP (response of mail-test.php is the email subject)
-    cy.request("localhost/mail-test.php").then((response) => {
+    cy.request("localhost:8080/mail-test.php").then((response) => {
       // Verify that the email arrived
       cy.request({
-        url: "localhost:8080/mail",
+        url: "localhost:8081/mail",
         qs: {
           subject: response.body,
         },

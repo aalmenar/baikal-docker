@@ -34,7 +34,7 @@ jobs:
         run: docker build -f ${{ inputs.dockerfile }}.dockerfile -t baikal-image .
 
       - name: Start Baikal container
-        run: docker run --rm -dp 80:80 --name ${{ inputs.dockerfile }} baikal-image
+        run: docker run --rm -dp 8080:8080 --name ${{ inputs.dockerfile }} baikal-image
 
       - name: Run Cypress tests
         run: npm run test
@@ -76,7 +76,7 @@ jobs:
         working-directory: cypress/fixtures
         run: |
           docker build -t mail-server -f mail-server.dockerfile .
-          docker run --rm -d --name mail-server -p 8025:8025 -p 8080:8080 mail-server
+          docker run --rm -d --name mail-server -p 8025:8025 -p 8081:8081 mail-server
 
       - name: Start Baikal container with MSMTP configuration
         env:
@@ -86,7 +86,7 @@ jobs:
             port    8025
             from    baikal@example.com
         run: |
-          docker run --rm --detach -p 80:80 -e MSMTPRC="$MSMTPRC" --link mail-server --name baikal baikal-image
+          docker run --rm --detach -p 8080:8080 -e MSMTPRC="$MSMTPRC" --link mail-server --name baikal baikal-image
           docker cp ${{ github.workspace }}/cypress/fixtures/mail-test.php baikal:/var/www/baikal/html/
 
       - name: Run Cypress tests incl. MSMTP

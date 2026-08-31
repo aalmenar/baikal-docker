@@ -2,7 +2,7 @@ describe("Create Baikal instance", () => {
   const adminCredentials = "ilovecookies";
 
   it("Should initialise Baikal", () => {
-    cy.visit("localhost");
+    cy.visit("localhost:8080");
 
     cy.get("#overview > h1").should(
       "have.text",
@@ -26,7 +26,7 @@ describe("Create Baikal instance", () => {
   });
 
   it("Should sign in as administrator", () => {
-    cy.visit("localhost/admin");
+    cy.visit("localhost:8080/admin");
 
     cy.get("input[name='password']").type(adminCredentials);
     cy.get("button[type='submit']").should("have.text", "Authenticate").click();
