@@ -24,7 +24,7 @@ I follow the same version naming scheme as [Baikal](http://sabre.io/baikal/) the
 
 The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm64v8` and `i386`.
 
-- [`0.12.1`, `0.12.1-nginx`](nginx.dockerfile)
+- [`0.13.0`, `0.13.0-nginx`](nginx.dockerfile)
 
 ## Quick reference
 
