@@ -22,6 +22,15 @@ on:
         description: Git reference to build
         default: ${{ github.ref }}
         type: string
+      baikal-version:
+        description: >
+          Baikal version the caller expects this Dockerfile to build (e.g. 0.13.0).
+          When set, the workflow asserts the Dockerfile's ARG BAIKAL_VERSION default
+          matches and passes it as a build-arg. Leave empty when no release tag is
+          known (e.g. the experimental build).
+        required: false
+        default: ""
+        type: string
 
 jobs:
   build:
@@ -31,6 +40,21 @@ jobs:
         with:
           ref: ${{ inputs.ref }}
           show-progress: false
+
+      - name: Assert Dockerfile builds the expected Baikal version
+        if: ${{ inputs.baikal-version != '' }}
+        env:
+          EXPECTED: ${{ inputs.baikal-version }}
+          DOCKERFILE: ${{ inputs.dockerfile }}
+        run: |
+          set -euo pipefail
+          EXPECTED_RE=$(printf '%s' "$EXPECTED" | sed 's/[^0-9a-zA-Z]/\\&/g')
+          grep -Eq "^ARG BAIKAL_VERSION=${EXPECTED_RE}([[:space:]]|$)" "$DOCKERFILE" \
+            || {
+              echo "::error file=${DOCKERFILE}::${DOCKERFILE} does not build Baikal ${EXPECTED}. Update ARG BAIKAL_VERSION or fix the release tag."
+              exit 1
+            }
+          echo "${DOCKERFILE} builds Baikal ${EXPECTED}"
 
       # See https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
@@ -56,6 +80,8 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           push: true
           tags: ${{ inputs.tags }}
+          build-args: |
+            ${{ inputs.baikal-version != '' && format('BAIKAL_VERSION={0}', inputs.baikal-version) || '' }}
           labels: |
             org.opencontainers.image.created=${{ github.event.created_at }}
             org.opencontainers.image.url=https://ghcr.io/${{ github.repository_owner }}/baikal

@@ -1,10 +1,13 @@
 # Multi-stage build, see https://docs.docker.com/develop/develop-images/multistage-build/
 FROM alpine AS builder
 
-ENV VERSION=0.13.0
+# Single source of truth for the Baikal version this image builds. CI asserts that this
+# default matches the release tag (build-job.yaml) and overrides it with --build-arg.
+# Do not reformat the ARG line: CI greps for it verbatim.
+ARG BAIKAL_VERSION=0.13.0
 
-ADD https://github.com/sabre-io/Baikal/releases/download/$VERSION/baikal-$VERSION.zip .
-RUN apk add unzip && unzip -q baikal-$VERSION.zip
+ADD https://github.com/sabre-io/Baikal/releases/download/${BAIKAL_VERSION}/baikal-${BAIKAL_VERSION}.zip .
+RUN apk add unzip && unzip -q baikal-${BAIKAL_VERSION}.zip
 
 # Final Docker image
 FROM nginx:1

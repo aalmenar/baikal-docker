@@ -94,6 +94,7 @@ jobs:
       dockerfile: nginx.dockerfile
       # Full release tag, e.g. 0.13.0 or 0.13.0-r1
       image-version: ${{ needs.parse_release_tag.outputs.ref }}
+      baikal-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
       image-revision: ${{ needs.parse_release_tag.outputs.ref }}
       tags: |
         ghcr.io/${{ github.repository_owner }}/baikal:nginx
