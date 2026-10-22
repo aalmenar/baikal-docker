@@ -11,8 +11,8 @@ else
   exec 3>/dev/null
 fi
 
-# Run the scripts in /docker-entrypoint.d if we're starting either Apache httpd or nginx
-if [ "$1" = "nginx" -o "$1" = "nginx-debug" -o "$1" = "apache2-foreground" ]
+# Run the scripts in /docker-entrypoint.d if we're starting nginx
+if [ "$1" = "nginx" -o "$1" = "nginx-debug" ]
 then
   if /usr/bin/find "/docker-entrypoint.d/" -mindepth 1 -maxdepth 1 -type f -print -quit 2>/dev/null | read v
   then

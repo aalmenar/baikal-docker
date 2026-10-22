@@ -10,12 +10,12 @@ These dockerfiles provide a ready-to-go [Baikal server](http://sabre.io/baikal/)
 
 ## Supported tags and respective Dockerfile links
 
-| Tag(s) | Description | Mutable? |
-| --- | --- | --- |
-| `<V>`, `<V>-nginx` | Moving pointer to the newest image revision of Baikal `<V>` | Yes (by design, documented) |
-| `<V>-rN`, `<V>-rN-nginx` | Pinned image revision of Baikal `<V>` | No (immutable by convention) |
-| `latest`, `nginx` | Newest release; [weekly re-builds](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) to include the latest base image with the most recent updates | Yes |
-| `experimental`, `experimental-nginx` | Experimental builds | Yes |
+| Tag(s)                               | Description                                                                                                                                                                     | Mutable?                     |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `<V>`, `<V>-nginx`                   | Moving pointer to the newest image revision of Baikal `<V>`                                                                                                                     | Yes (by design, documented)  |
+| `<V>-rN`, `<V>-rN-nginx`             | Pinned image revision of Baikal `<V>`                                                                                                                                           | No (immutable by convention) |
+| `latest`, `nginx`                    | Newest release; [weekly re-builds](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) to include the latest base image with the most recent updates | Yes                          |
+| `experimental`, `experimental-nginx` | Experimental builds                                                                                                                                                             | Yes                          |
 
 `<V>` tags are moving pointers to the newest image revision of that Baikal version; pin `<V>-rN` or a digest for reproducibility. Note that `0.13.1` never exists as an image tag unless real Baikal 0.13.1 ships.
 
@@ -70,7 +70,7 @@ The image exposes the `/var/www/baikal/Specific` and `/var/www/baikal/config` fo
 
 If you want to use local folders instead of Docker volumes, see [examples/docker-compose.localvolumes.yaml](https://github.com/aalmenar/baikal-docker/blob/master/examples/docker-compose.localvolumes.yaml) to avoid file permission issues.
 
-When the container starts, the startup script `/docker-entrypoint.d/40-fix-baikal-file-permissions.sh` ([Apache httpd](https://github.com/aalmenar/baikal-docker/blob/master/files/docker-entrypoint.d/httpd/40-fix-baikal-file-permissions.sh), [nginx](https://github.com/aalmenar/baikal-docker/blob/master/files/docker-entrypoint.d/nginx/40-fix-baikal-file-permissions.sh)) ensures that the file permissions are correct. You can disable this behaviour by setting the environment variable `BAIKAL_SKIP_CHOWN` to any value, e.g. `FALSE`.
+When the container starts, the startup script `/docker-entrypoint.d/40-fix-baikal-file-permissions.sh` ([source](https://github.com/aalmenar/baikal-docker/blob/master/files/docker-entrypoint.d/nginx/40-fix-baikal-file-permissions.sh)) ensures that the file permissions are correct. You can disable this behaviour by setting the environment variable `BAIKAL_SKIP_CHOWN` to any value, e.g. `FALSE`.
 
 ### Upgrading
 
@@ -100,6 +100,6 @@ This image has the latest code from the source repository, mainly used for testi
 
 ### `ghcr.io/aalmenar/baikal:latest`
 
-This image relies on [nginx](https://www.nginx.com/) and uses the [official nginx image](https://hub.docker.com/_/nginx/).
+This image relies on [nginx](https://www.nginx.com/) and uses the [official nginx image](https://hub.docker.com/_/nginx/). It is based on Debian and produces no warning messages out-of-the-box.
 
-Compared to the Apache variant, it is significantly smaller (less than half the size) and produces no warning messages out-of-the-box.
+> The former Apache httpd image variant is discontinued: it is no longer built or published, and the existing `:apache` tags on ghcr.io are frozen at their last versions. The nginx variant is the only image going forward.
