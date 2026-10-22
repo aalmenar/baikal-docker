@@ -9,7 +9,7 @@ jobs:
     permissions:
       issues: write
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v11
         with:
           include-only-assigned: true
           stale-issue-message: This issue looks inactive, I will close it in 7 days.
