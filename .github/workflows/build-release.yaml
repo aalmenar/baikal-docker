@@ -18,7 +18,10 @@ on:
 
 concurrency:
   group: build-release-images
-  cancel-in-progress: true
+  cancel-in-progress: false
+# GitHub semantics: at most one running and one pending run per concurrency group.
+# If a third release is published while one runs and one is queued, the queued run is
+# dropped and its version tags are never pushed (re-publish the release or trigger manually).
 
 jobs:
   parse_release_tag:
@@ -58,6 +61,12 @@ jobs:
           ghcr.io/$REPO_OWNER/baikal:$baikal-nginx
           ghcr.io/$REPO_OWNER/baikal:$baikal"
           fi
+
+          # Floating tags: every release publish moves latest/nginx onto this digest
+          # (unconditional aliasing policy — see PLAN.md §2.2)
+          tags="$tags
+          ghcr.io/$REPO_OWNER/baikal:nginx
+          ghcr.io/$REPO_OWNER/baikal:latest"
 
           # Trim the leading indentation of every line
           tags=$(printf '%s\n' "$tags" | sed 's/^[[:space:]]*//')
