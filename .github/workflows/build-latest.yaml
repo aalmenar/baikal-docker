@@ -2,6 +2,11 @@
 # - https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
 # - https://docs.github.com/en/actions/learn-github-actions/contexts
 # - https://github.com/docker/build-push-action/blob/master/docs/advanced/multi-platform.md
+#
+# Versioning is two-axis:
+#   <baikal-version>          e.g. 0.13.0      upstream release
+#   <baikal-version>-r<N>     e.g. 0.13.0-r1   image-only rebuild of a release
+# Only those two forms are accepted; anything else fails the run loudly.
 name: Latest images
 
 on:
@@ -21,27 +26,49 @@ jobs:
   parse_release_tag:
     runs-on: ubuntu-latest
     outputs:
-      ref: ${{ steps.parse-release-tag.outputs.REF_NAME }}
-      baikal-version: ${{ steps.parse-release-tag.outputs.BAIKAL_VERSION }}
+      ref: ${{ steps.parse.outputs.ref }}
+      baikal-version: ${{ steps.parse.outputs.baikal }}
+      revision: ${{ steps.parse.outputs.revision }}
     steps:
       - name: Parse release tag
-        id: parse-release-tag
+        id: parse
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
         run: |
-          if [ "${{ github.event_name }}" == "release" ]
-          then
-            # Get the release version by stripping build metadata from the release name
-            echo Parsing tag from release ref $REF_NAME
+          set -euo pipefail
+
+          if [ "$EVENT_NAME" == "release" ]; then
+            echo "Parsing tag from release ref $GITHUB_REF_NAME"
             REF_NAME=$GITHUB_REF_NAME
           else
-            # Get the latest release version from the GitHub API
-            echo Parsing tag from latest release ref $REF_NAME
-            REF_NAME=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r '.tag_name')
+            echo "Parsing tag from latest release ref"
+            REF_NAME=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name) || {
+              echo "::error::failed to fetch the latest release tag from the GitHub API"
+              exit 1
+            }
           fi
 
-          BAIKAL_VERSION=${REF_NAME/+*/}
-          echo Parsed Baikal version $BAIKAL_VERSION from release $REF_NAME
-          echo REF_NAME=$REF_NAME >> "$GITHUB_OUTPUT"
-          echo BAIKAL_VERSION=$BAIKAL_VERSION >> "$GITHUB_OUTPUT"
+          if [ -z "$REF_NAME" ]; then
+            echo "::error::could not determine the latest release tag"
+            exit 1
+          fi
+
+          # Only accept <baikal-version> or <baikal-version>-r<N>
+          if [[ ! "$REF_NAME" =~ ^([0-9]+\.[0-9]+\.[0-9]+)(-r([0-9]+))?$ ]]; then
+            echo "::error::release tag '$REF_NAME' must be <baikal-version> or <baikal-version>-r<N>"
+            exit 1
+          fi
+
+          BAIKAL_VERSION=${BASH_REMATCH[1]}
+          REVISION=${BASH_REMATCH[3]:-0}
+          echo "Parsed Baikal version $BAIKAL_VERSION, revision $REVISION from release $REF_NAME"
+
+          {
+            echo "ref=$REF_NAME"
+            echo "baikal=$BAIKAL_VERSION"
+            echo "revision=$REVISION"
+          } >> "$GITHUB_OUTPUT"
 
   test:
     name: ${{ matrix.dockerfile }}
@@ -65,7 +92,8 @@ jobs:
     with:
       ref: ${{ needs.parse_release_tag.outputs.ref }}
       dockerfile: nginx.dockerfile
-      image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
+      # Full release tag, e.g. 0.13.0 or 0.13.0-r1
+      image-version: ${{ needs.parse_release_tag.outputs.ref }}
       image-revision: ${{ needs.parse_release_tag.outputs.ref }}
       tags: |
         ghcr.io/${{ github.repository_owner }}/baikal:nginx

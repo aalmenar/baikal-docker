@@ -10,21 +10,22 @@ These dockerfiles provide a ready-to-go [Baikal server](http://sabre.io/baikal/)
 
 ## Supported tags and respective Dockerfile links
 
-Tags without a version are [weekly re-builds](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) to include the latest base image with the most recent updates:
+| Tag(s) | Description | Mutable? |
+| --- | --- | --- |
+| `<V>`, `<V>-nginx` | Moving pointer to the newest image revision of Baikal `<V>` | Yes (by design, documented) |
+| `<V>-rN`, `<V>-rN-nginx` | Pinned image revision of Baikal `<V>` | No (immutable by convention) |
+| `latest`, `nginx` | Newest release; [weekly re-builds](https://github.com/aalmenar/baikal-docker/actions/workflows/build-latest.yaml) to include the latest base image with the most recent updates | Yes |
+| `experimental`, `experimental-nginx` | Experimental builds | Yes |
 
-From now on latest images will be the nginx version.
+`<V>` tags are moving pointers to the newest image revision of that Baikal version; pin `<V>-rN` or a digest for reproducibility. Note that `0.13.1` never exists as an image tag unless real Baikal 0.13.1 ships.
 
-- `latest` and `nginx` are re-builds of the latest `*-nginx` version
-
-Experimental images now default to using the nginx images
-
-- `experimental-nginx` and `experimental` are re-builds of the latest `*-nginx` version
-
-I follow the same version naming scheme as [Baikal](http://sabre.io/baikal/) themselves.
+The version part of the tags follows [Baikal](http://sabre.io/baikal/)'s own releases; an optional `-r<N>` suffix marks an image-only rebuild of the same Baikal release.
 
 The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm64v8` and `i386`.
 
-- [`0.13.0`, `0.13.0-nginx`](nginx.dockerfile)
+- [`0.13.0`, `0.13.0-nginx`](nginx.dockerfile) — future rebuilds add e.g. `0.13.0-r1`
+
+To re-build an image without a Baikal version change, bump the base images/scripts on `main` and publish a release tagged `<V>-r<N>`, e.g.: `gh release create 0.13.0-r1 --target main --title "Baikal 0.13.0 — image rebuild 1" --notes "Base image refresh; no Baikal change; upgrade wizard not required."`
 
 ## Quick reference
 

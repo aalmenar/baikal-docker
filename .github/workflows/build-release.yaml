@@ -2,6 +2,13 @@
 # - https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
 # - https://docs.github.com/en/actions/learn-github-actions/contexts
 # - https://github.com/docker/build-push-action/blob/master/docs/advanced/multi-platform.md
+#
+# Versioning is two-axis:
+#   <baikal-version>          e.g. 0.13.0      upstream release
+#   <baikal-version>-r<N>     e.g. 0.13.0-r1   image-only rebuild of a release
+# The plain <baikal-version> tag is a moving pointer to the newest <baikal-version>-r<N> build.
+# <baikal-version>-r<N> is not valid semver, so tooling (Renovate, Watchtower, ...) does not
+# mistake an image rebuild for an upstream application upgrade.
 name: Build release images
 
 on:
@@ -17,12 +24,55 @@ jobs:
   parse_release_tag:
     runs-on: ubuntu-latest
     outputs:
-      baikal-version: ${{ steps.parse-release-tag.outputs.BAIKAL_VERSION }}
+      tag: ${{ steps.parse.outputs.tag }}
+      baikal-version: ${{ steps.parse.outputs.baikal }}
+      revision: ${{ steps.parse.outputs.revision }}
+      tags: ${{ steps.parse.outputs.tags }}
     steps:
-      # Get the release version by stripping build metadata from the release name
       - name: Parse release tag
-        id: parse-release-tag
-        run: echo BAIKAL_VERSION=${GITHUB_REF_NAME/+*/} >> "$GITHUB_OUTPUT"
+        id: parse
+        env:
+          REPO_OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+
+          # Only accept <baikal-version> or <baikal-version>-r<N>
+          if [[ ! "$GITHUB_REF_NAME" =~ ^([0-9]+\.[0-9]+\.[0-9]+)(-r([0-9]+))?$ ]]; then
+            echo "::error::release tag '$GITHUB_REF_NAME' must be <baikal-version> or <baikal-version>-r<N>"
+            exit 1
+          fi
+
+          tag=$GITHUB_REF_NAME
+          baikal=${BASH_REMATCH[1]}
+          revision=${BASH_REMATCH[3]:-0}
+
+          echo "Parsed Baikal version $baikal, revision $revision from release tag $tag"
+
+          # Compose the image tag list here so the reusable build job never sees empty entries.
+          tags="ghcr.io/$REPO_OWNER/baikal:$tag-nginx
+          ghcr.io/$REPO_OWNER/baikal:$tag"
+
+          # An image-only rebuild also moves the plain <baikal-version> tags to this build
+          if [ "$revision" != "0" ]; then
+            tags="$tags
+          ghcr.io/$REPO_OWNER/baikal:$baikal-nginx
+          ghcr.io/$REPO_OWNER/baikal:$baikal"
+          fi
+
+          # Trim the leading indentation of every line
+          tags=$(printf '%s\n' "$tags" | sed 's/^[[:space:]]*//')
+
+          echo "Image tags:"
+          printf '%s\n' "$tags"
+
+          {
+            echo "tag=$tag"
+            echo "baikal=$baikal"
+            echo "revision=$revision"
+            echo 'tags<<TAGS_EOF'
+            printf '%s\n' "$tags"
+            echo 'TAGS_EOF'
+          } >> "$GITHUB_OUTPUT"
 
   nginx:
     name: Nginx
@@ -30,8 +80,7 @@ jobs:
     uses: ./.github/workflows/build-job.yaml
     with:
       dockerfile: nginx.dockerfile
-      image-version: ${{ needs.parse_release_tag.outputs.baikal-version }}
-      tags: |
-        ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}-nginx
-        ghcr.io/${{ github.repository_owner }}/baikal:${{ needs.parse_release_tag.outputs.baikal-version }}
+      # Full release tag, e.g. 0.13.0 or 0.13.0-r1
+      image-version: ${{ needs.parse_release_tag.outputs.tag }}
+      tags: ${{ needs.parse_release_tag.outputs.tags }}
     secrets: inherit
