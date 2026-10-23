@@ -6,7 +6,7 @@ services:
     image: ghcr.io/aalmenar/baikal:nginx
     restart: always
     ports:
-      - "80:80"
+      - "8080:8080"
     volumes:
       - data:/var/www/baikal/Specific
       - config:/var/www/baikal/config
