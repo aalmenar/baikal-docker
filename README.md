@@ -21,7 +21,7 @@ These dockerfiles provide a ready-to-go [Baikal server](http://sabre.io/baikal/)
 
 The version part of the tags follows [Baikal](http://sabre.io/baikal/)'s own releases; an optional `-r<N>` suffix marks an image-only rebuild of the same Baikal release.
 
-The following tags support multiple architectures, e.g. `amd64`, `arm32v7`, `arm64v8` and `i386`.
+The following tags support multiple architectures: `amd64`, `arm32v7` and `arm64v8`.
 
 - [`0.13.0`, `0.13.0-nginx`](nginx.dockerfile) — future rebuilds add e.g. `0.13.0-r1`
 
@@ -76,7 +76,8 @@ When the container starts, the startup script `/docker-entrypoint.d/40-fix-baika
 
 Before upgrading, back up your database and the persistent `Specific` and `config` folders.
 
-> **Important:** After updating the image and recreating the container, open Baikal's administration panel at `/admin/` (relative to your Baikal URL) and complete the upgrade wizard if prompted. Updating the container alone does not complete the Baikal upgrade; any required database migrations must be applied through the wizard before normal use can resume.
+> [!IMPORTANT]
+> After updating the image and recreating the container, open Baikal's administration panel at `/admin/` (relative to your Baikal URL) and complete the upgrade wizard if prompted. Updating the container alone does not complete the Baikal upgrade; any required database migrations must be applied through the wizard before normal use can resume.
 
 See the [Baikal upgrade guide](https://sabre.io/baikal/upgrade/) for more information.
 
