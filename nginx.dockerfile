@@ -17,7 +17,6 @@ RUN curl -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
   apt update                  &&\
   apt install -y lsb-release  &&\
   echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list &&\
-  echo "deb [arch=arm64,armhf] https://packages.sury.org/freexian/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php-freexian.list &&\
   apt remove -y lsb-release   &&\
   apt update                  &&\
   apt install -y            \
