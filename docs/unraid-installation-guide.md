@@ -34,7 +34,7 @@ With that in mind, the installation of Baikal is rather simple once you have the
 
 1. Set your _Icon URL_ to <https://raw.githubusercontent.com/sabre-io/sabre.io/master/source/img/baikal.png> (Baikal logo from the official maintainers).
 
-1. Set your _WebUI_ to `http://[IP]:[PORT:80]/`
+1. Set your _WebUI_ to `http://[IP]:[PORT:8080]/`
 
    Change this to whatever suits your local server port requirements - see below.
 
@@ -68,11 +68,11 @@ With that in mind, the installation of Baikal is rather simple once you have the
 
 1. Now add in a _port_ with
    - _Name_ is `Port`
-   - _Container Port_ is `80`
-   - _Host Port_ is `80` (change to the port where you want to expose Baikal over HTTP on your local server)
-   - _Default Value_ is `80` (see above)
+   - _Container Port_ is `8080`
+   - _Host Port_ is `8080` (change to the port where you want to expose Baikal over HTTP on your local server)
+   - _Default Value_ is `8080` (see above)
    - _Connection Type_ is `TCP`
-   - _Description_ is `Container Port: 80`
+   - _Description_ is `Container Port: 8080`
 
 1. Click _Apply_ to download and install the container.
 

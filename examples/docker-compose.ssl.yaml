@@ -21,6 +21,7 @@ services:
       traefik.http.middlewares.baikal-dav.redirectregex.regex: https://(.*)/.well-known/(card|cal)dav
       traefik.http.middlewares.baikal-dav.redirectregex.replacement: https://$$1/dav.php/
       traefik.http.middlewares.baikal-dav.redirectregex.permanent: true
+      traefik.http.services.baikal.loadbalancer.server.port: "8080"
     volumes:
       - config:/var/www/baikal/config
       - data:/var/www/baikal/Specific

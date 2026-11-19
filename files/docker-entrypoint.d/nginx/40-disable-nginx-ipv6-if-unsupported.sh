@@ -10,5 +10,5 @@ ME=$(basename $0)
 # Added to resolve https://github.com/ckulka/baikal-docker/issues/73
 if nginx -t 2>&1 >/dev/null | grep -q '\[emerg\] socket() \[::\]:80 failed (97: Address family not supported by protocol)'; then
     echo "$ME: info: Disable IPv6 in configuration"
-    sed -i 's/listen \[::\]:80;/# listen \[::\]:80/' /etc/nginx/conf.d/default.conf
+    sed -i 's/listen \[::\]:8080;/# listen \[::\]:8080/' /etc/nginx/conf.d/default.conf
 fi
